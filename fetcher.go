@@ -49,20 +49,22 @@ func (f *Fetcher) Fetch(ctx context.Context) (*FetchResult, error) {
 	if device == nil {
 		return nil, fmt.Errorf("device not found")
 	}
-
+	ts := time.Now()
 	result := &FetchResult{}
 	tempEvent, ok := device.NewestEvents[natureremo.SensorTypeTemperature]
 	if ok {
 		result.Temperature = &FetchResultRow{
-			Value:     tempEvent.Value,
-			Timestamp: tempEvent.CreatedAt,
+			Value: tempEvent.Value,
+			// tempEvent.CreatedAt will not be updated when Value does not change.
+			Timestamp: ts,
 		}
 	}
 	humidEvent, ok := device.NewestEvents[natureremo.SensorTypeHumidity]
 	if ok {
 		result.Humidity = &FetchResultRow{
-			Value:     humidEvent.Value,
-			Timestamp: humidEvent.CreatedAt,
+			Value: humidEvent.Value,
+			// humidEvent.CreatedAt will not be updated when Value does not change.
+			Timestamp: ts,
 		}
 	}
 	return result, nil
