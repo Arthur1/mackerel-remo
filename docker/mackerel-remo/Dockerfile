@@ -1,13 +1,14 @@
-FROM golang:1.21-bookworm as builder
+FROM --platform=$BUILDPLATFORM golang:1.22-bookworm as builder
+ARG TARGETARCH
 
 WORKDIR /opt
 
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . ./
-RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o "mackerel-remo" ./cmd/mackerel-remo
+RUN CGO_ENABLED=0 GOARCH=${TARGETARCH} go build -ldflags="-s -w" -o "mackerel-remo" ./cmd/mackerel-remo
 
-FROM gcr.io/distroless/base-debian12:latest
+FROM gcr.io/distroless/base-debian12:nonroot
 
-COPY --from=builder /opt/mackerel-remo /mackerel-remo
+COPY --from=builder --chown=nonroot:nonroot /opt/mackerel-remo /mackerel-remo
 CMD ["/mackerel-remo"]

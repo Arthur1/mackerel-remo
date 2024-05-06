@@ -6,10 +6,14 @@ github.com/kylelemons/godebug v1.1.0 h1:RPNrshWIDI6G2gRW9EHilWtl7Z6Sb1BR0xunSBf0
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=
 github.com/mackerelio/mackerel-client-go v0.28.0 h1:wVkpKVfTd5koR0TP4a8jlaYjn5rhkbr7utbF8a1+Wyo=
 github.com/mackerelio/mackerel-client-go v0.28.0/go.mod h1:b4qVMQi+w4rxtKQIFycLWXNBtIi9d0r571RzYmg/aXo=
+github.com/mackerelio/mackerel-client-go v0.31.0 h1:oUBwuJzZkvhSFf7C7zpOBej8jM0kITUz7eVMAINIfO4=
+github.com/mackerelio/mackerel-client-go v0.31.0/go.mod h1:b4qVMQi+w4rxtKQIFycLWXNBtIi9d0r571RzYmg/aXo=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
+github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
+github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/tenntenn/natureremo v0.4.0 h1:CS1wrlJWJuoXyVhLRIXAEy+Q7qhXOt3d9cmlzlyQOs4=
 github.com/tenntenn/natureremo v0.4.0/go.mod h1:RisYZqmaVZ7u59aITVkk7G1JGU2/nmyp47HD011PciE=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
