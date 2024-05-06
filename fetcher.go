@@ -24,13 +24,14 @@ func NewFetcher(cfg *FetcherConfig) *Fetcher {
 }
 
 type FetchResult struct {
+	Timestamp   time.Time
 	Temperature *FetchResultRow
 	Humidity    *FetchResultRow
 }
 
 type FetchResultRow struct {
-	Value     float64
-	Timestamp time.Time
+	Value float64
+	Delay time.Duration
 }
 
 func (f *Fetcher) Fetch(ctx context.Context) (*FetchResult, error) {
@@ -49,14 +50,16 @@ func (f *Fetcher) Fetch(ctx context.Context) (*FetchResult, error) {
 	if device == nil {
 		return nil, fmt.Errorf("device not found")
 	}
-	ts := time.Now()
-	result := &FetchResult{}
+	now := time.Now()
+	result := &FetchResult{
+		Timestamp: now,
+	}
 	tempEvent, ok := device.NewestEvents[natureremo.SensorTypeTemperature]
 	if ok {
 		result.Temperature = &FetchResultRow{
 			Value: tempEvent.Value,
 			// tempEvent.CreatedAt will not be updated when Value does not change.
-			Timestamp: ts,
+			Delay: now.Sub(tempEvent.CreatedAt),
 		}
 	}
 	humidEvent, ok := device.NewestEvents[natureremo.SensorTypeHumidity]
@@ -64,7 +67,7 @@ func (f *Fetcher) Fetch(ctx context.Context) (*FetchResult, error) {
 		result.Humidity = &FetchResultRow{
 			Value: humidEvent.Value,
 			// humidEvent.CreatedAt will not be updated when Value does not change.
-			Timestamp: ts,
+			Delay: now.Sub(humidEvent.CreatedAt),
 		}
 	}
 	return result, nil

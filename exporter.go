@@ -25,19 +25,28 @@ func NewMackerelExporter(cfg *MackerelExporterConfig) *MackerelExporter {
 }
 
 func (e *MackerelExporter) Export(ctx context.Context, result *FetchResult) error {
-	values := make([]*mackerel.MetricValue, 0, 2)
+	values := make([]*mackerel.MetricValue, 0, 4)
+	t := result.Timestamp.Round(time.Minute).Unix()
 	if result.Temperature != nil {
 		values = append(values, &mackerel.MetricValue{
 			Name:  fmt.Sprintf("natureremo.temperature.%s", e.RemoDeviceNameForExport),
-			Time:  result.Temperature.Timestamp.Round(time.Minute).Unix(),
+			Time:  t,
 			Value: result.Temperature.Value,
+		}, &mackerel.MetricValue{
+			Name:  fmt.Sprintf("natureremo.temperature.event_delay_seconds.%s", e.RemoDeviceNameForExport),
+			Time:  t,
+			Value: result.Temperature.Delay.Seconds(),
 		})
 	}
 	if result.Humidity != nil {
 		values = append(values, &mackerel.MetricValue{
 			Name:  fmt.Sprintf("natureremo.humidity.%s", e.RemoDeviceNameForExport),
-			Time:  result.Humidity.Timestamp.Round(time.Minute).Unix(),
+			Time:  t,
 			Value: result.Humidity.Value,
+		}, &mackerel.MetricValue{
+			Name:  fmt.Sprintf("natureremo.humidity.event_delay_seconds.%s", e.RemoDeviceNameForExport),
+			Time:  t,
+			Value: result.Humidity.Delay.Seconds(),
 		})
 	}
 	return e.client.PostServiceMetricValues(e.MackerelServiceName, values)
